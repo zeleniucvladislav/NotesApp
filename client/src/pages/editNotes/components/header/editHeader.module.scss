@@ -1,0 +1,11 @@
+@import "styles/mixins";
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  &_btn {
+    @include button;
+    height: 35px;
+  }
+}

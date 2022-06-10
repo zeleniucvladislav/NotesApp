@@ -1,0 +1,43 @@
+@import "styles/mixins";
+
+.layout {
+  position: fixed;
+  width: 100%;
+  z-index: 3;
+  background-color: var(--box-color);
+  bottom: 0;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  max-width: 1000px;
+  padding: 5px 0;
+}
+
+%flex-mixin {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+.link {
+  @include link;
+  font-size: 25px;
+}
+
+.logout {
+  @extend %flex-mixin;
+  font-size: 25px;
+
+  &:hover,
+  &:active {
+    background-color: var(--red-color);
+  }
+}

@@ -1,0 +1,23 @@
+@import "styles/mixins";
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: calc(min(70%, 500px));
+  padding: 30px;
+  background-color: var(--box-color);
+
+  &__button {
+    @include button;
+    height: 30px;
+  }
+}
+
+.field {
+  @include field;
+}
+
+.input {
+  @include input;
+}

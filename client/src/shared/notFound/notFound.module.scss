@@ -1,0 +1,18 @@
+@import "styles/mixins";
+
+.wrapper {
+  display: flex;
+  margin-top: 50px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  text-align: center;
+  & p {
+    font-size: 22px;
+  }
+}
+.homepage_btn {
+  @include button;
+  padding: 10px;
+}

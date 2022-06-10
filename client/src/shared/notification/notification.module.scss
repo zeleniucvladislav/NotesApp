@@ -1,0 +1,44 @@
+.container {
+  top: 50px;
+  width: 100%;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  z-index: 4;
+}
+
+.notification {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+  padding: 10px;
+  border-radius: 4px;
+  width: 250px;
+
+  background-color: var(--main-color);
+  &_error {
+    background-color: var(--red-color);
+  }
+  &_success {
+    background-color: var(--green-color);
+  }
+  &:last-child {
+    animation: notification-pop 0.4s ease-out;
+  }
+}
+
+@keyframes notification-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 100;
+    transform: translateY(0px);
+  }
+}

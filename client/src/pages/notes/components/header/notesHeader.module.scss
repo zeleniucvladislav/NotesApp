@@ -1,0 +1,24 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 10px;
+  @media (max-width: 375px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  &_right {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    height: 35px;
+  }
+  &_select {
+    cursor: pointer;
+    background-color: var(--box-color);
+    color: var(--text-color);
+    border: none;
+    outline: none;
+    padding: 5px;
+  }
+}

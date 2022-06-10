@@ -1,0 +1,53 @@
+@import "styles/mixins";
+
+.layout {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 3;
+  background-color: var(--bg-color);
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1000px;
+  margin: auto;
+  padding: 15px 20px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+%flex-mixin {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.userData {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  &__link {
+    @include link;
+    @extend %flex-mixin;
+  }
+  &__name {
+    @extend %flex-mixin;
+  }
+
+  &__logout {
+    @extend %flex-mixin;
+    @include button;
+    height: 30px;
+
+    &:hover {
+      background-color: var(--red-color);
+    }
+  }
+}
