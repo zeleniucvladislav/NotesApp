@@ -7,10 +7,12 @@ import { ModalFields } from "types/modalFields.type";
 import styles from "./noteModal.module.scss";
 import { MdClear } from "react-icons/md";
 import { useNotesContext } from "context/notes/notes.context";
+import { useOutsideClick } from "utils/hooks/useOutsideClick";
 
 const NoteModal = () => {
   const { handleVisibility } = useModalContext();
   const { fetchNotes } = useNotesContext();
+  const { ref } = useOutsideClick();
   const { request } = useAxios();
   const defaultValues: ModalFields = {
     title: "",
@@ -30,7 +32,7 @@ const NoteModal = () => {
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
-        <div className={styles.form}>
+        <div className={styles.form} ref={ref}>
           <button
             type="button"
             className={styles.form__clear}

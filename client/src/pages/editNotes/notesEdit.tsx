@@ -6,9 +6,9 @@ import { EditNoteContext } from "context/edit/edit.context";
 import { useAxios } from "utils/hooks/useAxios";
 import { NotesType } from "types/notes.type";
 
-import styles from "./editNotes.module.scss";
+import styles from "./notesEdit.module.scss";
 
-const EditNotes = () => {
+const NotesEdit = () => {
   const [notes, setNotes] = useState<NotesType[]>([]);
   const { request, loading } = useAxios();
 
@@ -49,4 +49,4 @@ const EditNotes = () => {
   );
 };
 
-export default EditNotes;
+export default NotesEdit;

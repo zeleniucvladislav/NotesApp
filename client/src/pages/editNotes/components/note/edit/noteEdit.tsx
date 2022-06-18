@@ -6,7 +6,7 @@ import { ModalFields } from "types/modalFields.type";
 import { useEditContext } from "context/edit/edit.context";
 import { MdClear } from "react-icons/md";
 
-import styles from "./editNote.module.scss";
+import styles from "./noteEdit.module.scss";
 
 type Props = {
   setEdit: React.Dispatch<React.SetStateAction<boolean>>;
@@ -40,7 +40,7 @@ const NoteEdit = ({ setEdit }: Props) => {
     <>
       <button
         type="button"
-        className={`${styles.note_buttons} ${styles.clear}`}
+        className={styles.clear}
         onClick={() => setEdit(false)}
       >
         <MdClear />

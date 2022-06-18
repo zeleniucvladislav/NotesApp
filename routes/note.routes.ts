@@ -22,7 +22,8 @@ router.get(
         .populate("creator", "username")
         .sort({ created_at: -1 });
 
-      return res.status(201).json({ message: "Notes fetched", links });
+      // return res.status(201).json({ message: "Notes fetched", links });
+      return res.status(201).json({ links });
     } catch (e) {
       console.log(e);
       return res.status(500).json({ message: "Something went wrong." });
@@ -35,7 +36,8 @@ router.get("/all", authMiddleware, async (req: Request, res: Response) => {
     const links = await Note.find({ nonpublic: false })
       .populate("creator", "username")
       .sort({ created_at: -1 });
-    return res.status(201).json({ message: "Notes fetched", links });
+    // return res.status(201).json({ message: "Notes fetched", links });
+    return res.status(201).json({ links });
   } catch (e) {
     return res.status(500).json({ message: "Something went wrong." });
   }
@@ -50,7 +52,7 @@ router.get(
         "creator",
         "username"
       );
-      return res.json(link);
+      return res.status(201).json({ link });
     } catch (e) {
       return res.status(500).json({ message: "Something went wrong." });
     }

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import NoteEdit from "./noteEdit";
-import NoteView from "./noteView";
+import NoteEdit from "./edit/noteEdit";
+import NoteView from "./view/noteView";
 
-import styles from "./editNote.module.scss";
+import styles from "./noteWrapper.module.scss";
 
 const NoteWrapper = () => {
   const [isEdit, setEdit] = useState<boolean>(false);

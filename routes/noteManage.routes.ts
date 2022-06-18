@@ -16,9 +16,9 @@ router.get("/", authMiddleware, async (req: IUserNoteRequest, res: any) => {
       .populate("creator", "username")
       .sort({ created_at: -1 });
 
-    return res.status(201).json({ message: "Notes fetched", links });
+    // return res.status(201).json({ message: "Notes fetched", links });
+    return res.status(201).json({ links });
   } catch (e) {
-    console.log(e);
     return res.status(500).json({ message: "Something went wrong." });
   }
 });

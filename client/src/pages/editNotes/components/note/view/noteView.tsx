@@ -6,7 +6,7 @@ import { FaClock } from "react-icons/fa";
 import { useAxios } from "utils/hooks/useAxios";
 import { useEditContext } from "context/edit/edit.context";
 
-import styles from "./editNote.module.scss";
+import styles from "./noteView.module.scss";
 
 type Props = {
   setEdit: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,7 +28,7 @@ const NoteView = ({ setEdit }: Props) => {
 
   return (
     <>
-      <div className={styles.note_buttons}>
+      <div className={styles.buttons}>
         <button className={styles.edit} onClick={() => setEdit(true)}>
           <BsPencilFill size={12} />
         </button>
@@ -36,9 +36,9 @@ const NoteView = ({ setEdit }: Props) => {
           <BsXLg size={12} />
         </button>
       </div>
-      <h2 className={styles.note_header}>{title}</h2>
-      <p className={styles.note_text}>{truncatedText}</p>
-      <div className={styles.note_footer}>
+      <h2 className={styles.title}>{title}</h2>
+      <p className={styles.text}>{truncatedText}</p>
+      <div className={styles.footer}>
         <FaClock />
         {moment(created_at).format("Do MMMM YYYY")}
       </div>

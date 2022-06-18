@@ -1,0 +1,15 @@
+@import "styles/mixins";
+
+.clear {
+  @include button;
+  background: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-right: inherit;
+  padding-top: inherit;
+  &:hover {
+    background: none;
+    color: var(--red-color);
+  }
+}

@@ -23,18 +23,26 @@ export const useAxios = () => {
       await api
         .request({ method, url, data })
         .then((res) => {
-          const resMessage = { status: res.status, message: res.data.message };
-          handleNotification(resMessage);
+          if (res.data.message) {
+            const resMessage = {
+              status: res.status,
+              message: res.data.message,
+            };
+            handleNotification(resMessage);
+          }
+
           setLoading(false);
           response = res.data;
         })
         .catch((err) => {
+          if (err.response.data.message) {
+            const resMessage = {
+              status: err.response.status,
+              message: err.response.data.message,
+            };
+            handleNotification(resMessage);
+          }
           setLoading(false);
-          const resMessage = {
-            status: err.response.status,
-            message: err.response.data.message,
-          };
-          handleNotification(resMessage);
         });
       return response;
     },
