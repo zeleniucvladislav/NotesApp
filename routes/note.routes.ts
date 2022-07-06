@@ -2,9 +2,9 @@ import { Router, Request, Response } from "express";
 import { check, validationResult } from "express-validator";
 
 import Note from "../models/Note";
-import { authMiddleware } from "../middleware/auth.middleware";
+import { authMiddleware, paginationMiddleware } from "../middleware";
 
-export interface IUserNoteRequest extends Request {
+interface IUserNoteRequest extends Request {
   user: { userId: string };
 }
 
@@ -13,46 +13,72 @@ export const router = Router();
 router.get(
   "/personal",
   authMiddleware,
+  paginationMiddleware,
   async (req: IUserNoteRequest, res: any) => {
     try {
-      const links = await Note.find({
+      const { limit, skip } = req.pagination;
+      const totalNotes = await Note.countDocuments({
+        nonpublic: true,
+        creator: req.user.userId,
+      });
+      const totalPages = Math.ceil(totalNotes / limit);
+
+      const notes = await Note.find({
         nonpublic: true,
         creator: req.user.userId,
       })
         .populate("creator", "username")
-        .sort({ created_at: -1 });
+        .sort({ created_at: -1 })
+        .limit(limit)
+        .skip(skip);
 
-      // return res.status(201).json({ message: "Notes fetched", links });
-      return res.status(201).json({ links });
-    } catch (e) {
-      console.log(e);
+      return res.status(201).json({
+        notes,
+        totalPages,
+      });
+    } catch (err) {
       return res.status(500).json({ message: "Something went wrong." });
     }
   }
 );
 
-router.get("/all", authMiddleware, async (req: Request, res: Response) => {
-  try {
-    const links = await Note.find({ nonpublic: false })
-      .populate("creator", "username")
-      .sort({ created_at: -1 });
-    // return res.status(201).json({ message: "Notes fetched", links });
-    return res.status(201).json({ links });
-  } catch (e) {
-    return res.status(500).json({ message: "Something went wrong." });
+router.get(
+  "/all",
+  authMiddleware,
+  paginationMiddleware,
+  async (req: Request, res: Response) => {
+    try {
+      const { limit, skip } = req.pagination;
+
+      const totalNotes = await Note.countDocuments({ nonpublic: false });
+      const totalPages = Math.ceil(totalNotes / limit);
+
+      const notes = await Note.find({ nonpublic: false })
+        .populate("creator", "username")
+        .sort({ created_at: -1 })
+        .limit(limit)
+        .skip(skip);
+
+      return res.status(201).json({
+        notes,
+        totalPages,
+      });
+    } catch (err) {
+      return res.status(500).json({ message: "Something went wrong." });
+    }
   }
-});
+);
 
 router.get(
   "/:id",
   authMiddleware,
   async (req: Request<{ id: string }>, res: Response) => {
     try {
-      const link = await Note.findById(req.params.id).populate(
+      const note = await Note.findById(req.params.id).populate(
         "creator",
         "username"
       );
-      return res.status(201).json({ link });
+      return res.status(201).json({ note });
     } catch (e) {
       return res.status(500).json({ message: "Something went wrong." });
     }
@@ -90,7 +116,7 @@ router.post(
       await note.save();
 
       return res.status(201).json({ message: "Note was sucessfuly created" });
-    } catch (e) {
+    } catch (err) {
       return res.status(500).json({ message: "Something went wrong." });
     }
   }

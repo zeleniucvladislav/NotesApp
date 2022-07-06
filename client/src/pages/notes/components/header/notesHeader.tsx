@@ -9,10 +9,20 @@ type Options = {
 
 type Props = {
   handleChangeSelect: (evt: React.ChangeEvent<HTMLSelectElement>) => void;
-  options: Options[];
 };
 
-const NotesHeader = ({ handleChangeSelect, options }: Props) => {
+const NotesHeader = ({ handleChangeSelect }: Props) => {
+  const options: Options[] = [
+    {
+      label: "All",
+      value: "all",
+    },
+    {
+      label: "Personal",
+      value: "personal",
+    },
+  ];
+
   return (
     <header className={styles.header}>
       <h1>Recent notes</h1>

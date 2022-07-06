@@ -16,8 +16,9 @@ export const Note = () => {
 
   const fetchNote = useCallback(async () => {
     const res: any = await request(`/api/notes/${id}`, "GET");
+
     if (res) {
-      setNote(res);
+      setNote(res.note);
     }
   }, [request, id]);
 

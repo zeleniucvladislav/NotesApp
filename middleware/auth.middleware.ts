@@ -15,14 +15,14 @@ export const authMiddleware = (
     const token = req.headers.authorization || "";
 
     if (!token) {
-      res.sendStatus(401).json({ message: "No authorization" });
+      return res.status(401).json({ message: "No authorization" });
     }
 
     const decoded = jwt.verify(token, config.get("jwtSecret"));
-
     req.user = decoded;
+
     next();
-  } catch (e) {
-    res.sendStatus(401).json({ message: "No authorization" });
+  } catch (err) {
+    res.status(401).json({ message: "No authorization" });
   }
 };

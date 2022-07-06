@@ -1,11 +1,10 @@
 import { createContext, useContext } from "react";
-import { UserType } from "types/user.type";
 
 type UserContextType = {
   token: string | null;
-  user: null | UserType;
+  user: null | string;
   isAuthentificated: boolean;
-  login: (jwtToken: string, id: string, user: string) => void;
+  login: (jwtToken: string, user: string) => void;
   logout: () => void;
 };
 

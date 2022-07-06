@@ -3,7 +3,7 @@ import { NotesType } from "types/notes.type";
 
 type EditNoteType = {
   note: NotesType;
-  fetchNotes: () => Promise<void>;
+  fetchNotes: (page?: number) => Promise<void>;
 };
 
 export const EditNoteContext = createContext<EditNoteType>({

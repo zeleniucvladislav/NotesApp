@@ -24,7 +24,7 @@ const NoteModal = () => {
     const res = await request("/api/notes/create", "POST", data);
 
     if (res) {
-      fetchNotes();
+      fetchNotes(1);
       handleVisibility(false);
     }
   };

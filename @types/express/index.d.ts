@@ -6,6 +6,7 @@ declare global {
     interface Request {
       headers?: { authorization: string };
       user?: string | JwtPayload;
+      pagination: { limit: number; skip: number };
     }
   }
 }

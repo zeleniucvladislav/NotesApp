@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 
 type NotesType = {
-  fetchNotes: () => Promise<void>;
+  fetchNotes: (page: number) => Promise<void>;
 };
 
 export const NotesContext = createContext<NotesType>({

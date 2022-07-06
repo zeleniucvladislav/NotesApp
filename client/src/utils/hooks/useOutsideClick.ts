@@ -7,7 +7,6 @@ export const useOutsideClick = () => {
 
   const handleClickOutside = useCallback(
     (evt: MouseEvent) => {
-      console.log("mouse evt");
       if (ref.current && !ref.current.contains(evt.target as HTMLDivElement)) {
         handleVisibility(false);
       }

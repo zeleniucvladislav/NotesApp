@@ -11,7 +11,7 @@ type Props = {
 };
 
 const NotesList = ({ notes }: Props) => {
-  const truncate = (text: string, id: string) => {
+  const truncateText = (text: string, id: string) => {
     return text.length > 650 ? (
       <>
         {text.substring(0, 650)}...
@@ -34,11 +34,13 @@ const NotesList = ({ notes }: Props) => {
 
   return (
     <section className={styles.notes}>
-      {notes.map((note: NotesType) => {
+      {notes?.map((note: NotesType) => {
         return (
           <article className={styles.note} key={note._id}>
             <h2 className={styles.note_header}>{note.title}</h2>
-            <p className={styles.note_text}>{truncate(note.text, note._id)}</p>
+            <p className={styles.note_text}>
+              {truncateText(note.text, note._id)}
+            </p>
             <div className={styles.note_footer}>
               <span>
                 <FaClock />

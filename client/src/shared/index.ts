@@ -6,6 +6,7 @@ import Loader from "./loader/loader";
 import NoNotes from "./noNotes/noNotes";
 import ScrollOnTop from "./scrollOnTop/scrollOnTop";
 import NotFound from "./notFound/notFound";
+import PagesBar from "./pagination/pagesBar";
 
 export {
   NotesList,
@@ -16,4 +17,5 @@ export {
   NoNotes,
   ScrollOnTop,
   NotFound,
+  PagesBar,
 };

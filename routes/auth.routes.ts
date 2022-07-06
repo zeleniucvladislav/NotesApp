@@ -4,6 +4,8 @@ import config from "config";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
+import { sendEmail } from "../utils";
+
 import User from "../models/User";
 
 export const router = Router();
@@ -45,8 +47,16 @@ router.post(
 
       await user.save();
 
-      return res.status(201).json({ message: "User was sucessfuly created" });
-    } catch (e) {
+      //email confirmation
+      const apiURL = config.get("apiURL");
+
+      const confirmationURL = `Please confirm your email by accessing this URL : ${apiURL}/auth/verify/${user.id}`;
+      await sendEmail(user.email, "Email Confirmation", confirmationURL);
+
+      return res
+        .status(201)
+        .json({ message: "An email was sent to validate your account" });
+    } catch (err) {
       return res.status(500).json({ message: "Something went wrong." });
     }
   }
@@ -86,8 +96,14 @@ router.post(
         return res.status(400).json({ message: "Password is incorrect" });
       }
 
+      if (!user.verified) {
+        return res
+          .status(400)
+          .json({ message: "Please confirm your email address to proceed" });
+      }
+
       const token = jwt.sign({ userId: user.id }, config.get("jwtSecret"), {
-        expiresIn: "90 days",
+        expiresIn: "90d",
       });
 
       return res.status(201).json({
@@ -96,8 +112,44 @@ router.post(
         userId: user.id,
         username: user.username,
       });
-    } catch (e) {
+    } catch (err) {
       return res.status(500).json({ message: "Something went wrong." });
     }
   }
 );
+
+router.get("/verify/:id", async (req: Request, res: Response) => {
+  try {
+    if (!req.params.id) {
+      return res.status(404).send("No ID provided");
+    }
+
+    await User.findOneAndUpdate({ _id: req.params.id }, { verified: true });
+
+    const redirectURL: string = config.get("appURL");
+
+    return res.redirect(redirectURL);
+  } catch (err) {
+    return res.status(400).send("An error occured");
+  }
+});
+
+router.get("/", async (req: Request, res: Response) => {
+  try {
+    const token = req.headers.authorization || "";
+
+    if (!token) {
+      return res.status(401).json({ message: "No authorization" });
+    }
+
+    jwt.verify(token, config.get("jwtSecret"));
+
+    return res.status(201).json({
+      isAuthentificated: true,
+    });
+  } catch (err) {
+    return res.status(401).json({
+      isAuthentificated: false,
+    });
+  }
+});

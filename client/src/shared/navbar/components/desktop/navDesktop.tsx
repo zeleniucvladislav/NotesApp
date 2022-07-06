@@ -14,9 +14,7 @@ const NavDesktop = () => {
   const navigate = useNavigate();
 
   const username =
-    user?.username && user.username.length > 20
-      ? `${user?.username.substring(0, 17)}...`
-      : user?.username;
+    user && user.length > 20 ? `${user.substring(0, 17)}...` : user;
 
   const handleLogout = () => {
     logout();

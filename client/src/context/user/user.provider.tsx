@@ -1,21 +1,25 @@
 import { useState, useCallback, useEffect } from "react";
+
+import { useAxios } from "utils/hooks/useAxios";
+
 import { UserContext } from "./user.context";
-import { UserType } from "types/user.type";
 
 const storageName = "userData";
 
 export const UserProvider = ({ children }: any) => {
   const [token, setToken] = useState<null | string>(null);
-  const [user, setUser] = useState<null | UserType>(null);
+  const [user, setUser] = useState<null | string>(null);
   const [isAuthentificated, setAuth] = useState<boolean>(!!token);
 
-  const login = useCallback((jwtToken: string, id: string, user: string) => {
+  const { request } = useAxios();
+
+  const login = useCallback((jwtToken: string, user: string) => {
     setToken(jwtToken);
-    setUser({ userId: id, username: user });
+    setUser(user);
     setAuth(true);
     localStorage.setItem(
       storageName,
-      JSON.stringify({ userId: id, token: jwtToken, username: user })
+      JSON.stringify({ token: jwtToken, username: user })
     );
   }, []);
 
@@ -26,13 +30,22 @@ export const UserProvider = ({ children }: any) => {
     localStorage.removeItem(storageName);
   }, []);
 
-  useEffect(() => {
+  const handleAuthentification = useCallback(async () => {
     const data = JSON.parse(localStorage.getItem(storageName)!);
-
     if (data?.token) {
-      login(data.token, data.userId, data.username);
+      const res: any = await request("/api/auth", "GET");
+
+      if (res) {
+        return login(data.token, data.username);
+      }
     }
-  }, [login]);
+
+    logout();
+  }, [login, logout, request]);
+
+  useEffect(() => {
+    handleAuthentification();
+  }, [handleAuthentification]);
 
   return (
     <UserContext.Provider

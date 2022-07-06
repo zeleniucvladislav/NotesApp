@@ -10,7 +10,7 @@ export const Login = () => {
   const handleRequest = async (data: any) => {
     const response: any = await request("/api/auth/login", "POST", data);
 
-    login(response.token, response.userId, response.username);
+    login(response.token, response.username);
   };
 
   return (
