@@ -21,7 +21,7 @@ const NoteModal = () => {
   };
 
   const handleRequest = async (data: ModalFields) => {
-    const res = await request("/api/notes/create", "POST", data);
+    const res = await request("/notes/create", "POST", data);
 
     if (res) {
       fetchNotes(1);

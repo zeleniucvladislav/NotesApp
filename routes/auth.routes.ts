@@ -10,6 +10,26 @@ import User from "../models/User";
 
 export const router = Router();
 
+router.get("/", async (req: Request, res: Response) => {
+  try {
+    const token = req.headers.authorization || "";
+
+    if (!token) {
+      return res.status(401).json({ message: "No authorization" });
+    }
+
+    jwt.verify(token, config.get("jwtSecret"));
+
+    return res.status(201).json({
+      isAuthentificated: true,
+    });
+  } catch (err) {
+    return res.status(401).json({
+      isAuthentificated: false,
+    });
+  }
+});
+
 router.post(
   "/register",
   [
@@ -48,9 +68,9 @@ router.post(
       await user.save();
 
       //email confirmation
-      const apiURL = config.get("apiURL");
+      const appURL = config.get("appURL");
 
-      const confirmationURL = `Please confirm your email by accessing this URL : ${apiURL}/auth/verify/${user.id}`;
+      const confirmationURL = `Please confirm your email by accessing this URL : ${appURL}/verify/${user.id}`;
       await sendEmail(user.email, "Email Confirmation", confirmationURL);
 
       return res
@@ -109,7 +129,6 @@ router.post(
       return res.status(201).json({
         message: "Logged in successfully",
         token,
-        userId: user.id,
         username: user.username,
       });
     } catch (err) {
@@ -120,36 +139,32 @@ router.post(
 
 router.get("/verify/:id", async (req: Request, res: Response) => {
   try {
-    if (!req.params.id) {
-      return res.status(404).send("No ID provided");
+    const id = req.params.id;
+
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(400).json({ message: "Username not found" });
     }
 
-    await User.findOneAndUpdate({ _id: req.params.id }, { verified: true });
-
-    const redirectURL: string = config.get("appURL");
-
-    return res.redirect(redirectURL);
-  } catch (err) {
-    return res.status(400).send("An error occured");
-  }
-});
-
-router.get("/", async (req: Request, res: Response) => {
-  try {
-    const token = req.headers.authorization || "";
-
-    if (!token) {
-      return res.status(401).json({ message: "No authorization" });
+    if (user.verified) {
+      return res.status(400).json({ message: "User is already verified" });
     }
 
-    jwt.verify(token, config.get("jwtSecret"));
+    await user.update({ verified: true });
+
+    const token = jwt.sign({ userId: user.id }, config.get("jwtSecret"), {
+      expiresIn: "90d",
+    });
 
     return res.status(201).json({
-      isAuthentificated: true,
+      message: "Logged in successfully",
+      token,
+      username: user.username,
     });
   } catch (err) {
-    return res.status(401).json({
-      isAuthentificated: false,
-    });
+    return res
+      .status(400)
+      .json({ message: "Sorry ! Looks like this URL doesn't exist " });
   }
 });

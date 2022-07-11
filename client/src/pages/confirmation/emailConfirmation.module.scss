@@ -1,0 +1,16 @@
+@import "styles/mixins";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  button {
+    @include button;
+    font-size: 25px;
+    height: 50px;
+    text-decoration: none;
+  }
+}

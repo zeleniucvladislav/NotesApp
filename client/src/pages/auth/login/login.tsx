@@ -8,7 +8,7 @@ export const Login = () => {
   const { login } = useUserContext();
 
   const handleRequest = async (data: any) => {
-    const response: any = await request("/api/auth/login", "POST", data);
+    const response: any = await request("/auth/login", "POST", data);
 
     login(response.token, response.username);
   };

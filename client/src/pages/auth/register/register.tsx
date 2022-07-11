@@ -12,7 +12,7 @@ export const Register = ({ setLogin }: Props) => {
   const handleRequest = async (data: any) => {
     const requestData = data;
     delete requestData.repeatPwd;
-    const res = await request("/api/auth/register", "POST", requestData);
+    const res = await request("/auth/register", "POST", requestData);
 
     if (res) {
       setLogin(true);

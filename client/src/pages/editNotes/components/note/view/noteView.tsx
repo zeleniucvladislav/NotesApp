@@ -19,7 +19,7 @@ const NoteView = ({ setEdit }: Props) => {
   const { _id, title, text, created_at } = note;
 
   const handleDeleteNote = async (id: string) => {
-    await request("/api/manage/delete", "DELETE", { noteId: id });
+    await request("/manage/delete", "DELETE", { noteId: id });
     await fetchNotes();
   };
 

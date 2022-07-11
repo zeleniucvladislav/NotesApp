@@ -25,7 +25,7 @@ const NoteEdit = ({ setEdit }: Props) => {
   };
 
   const handleRequest = async (data: ModalFields) => {
-    const res = await request("/api/manage/edit", "PUT", {
+    const res = await request("/manage/edit", "PUT", {
       noteId: _id,
       note: data,
     });

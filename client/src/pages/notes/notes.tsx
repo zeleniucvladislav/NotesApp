@@ -25,8 +25,8 @@ const Notes = () => {
     async (page: number = currentPage) => {
       const url =
         notesType === "all"
-          ? `/api/notes/all?page=${page}`
-          : `/api/notes/personal?page=${page}`;
+          ? `/notes/all?page=${page}`
+          : `/notes/personal?page=${page}`;
 
       const res: any = await request(url, "GET");
 

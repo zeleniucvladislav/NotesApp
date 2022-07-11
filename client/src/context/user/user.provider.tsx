@@ -33,7 +33,7 @@ export const UserProvider = ({ children }: any) => {
   const handleAuthentification = useCallback(async () => {
     const data = JSON.parse(localStorage.getItem(storageName)!);
     if (data?.token) {
-      const res: any = await request("/api/auth", "GET");
+      const res: any = await request("/auth", "GET");
 
       if (res) {
         return login(data.token, data.username);

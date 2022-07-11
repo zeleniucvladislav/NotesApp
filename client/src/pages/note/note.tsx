@@ -12,10 +12,10 @@ export const Note = () => {
   const [note, setNote] = useState<NotesType>();
   const { request, loading } = useAxios();
 
-  let { id } = useParams();
+  const { id } = useParams();
 
   const fetchNote = useCallback(async () => {
-    const res: any = await request(`/api/notes/${id}`, "GET");
+    const res: any = await request(`/notes/${id}`, "GET");
 
     if (res) {
       setNote(res.note);

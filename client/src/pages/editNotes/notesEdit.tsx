@@ -19,7 +19,7 @@ const NotesEdit = () => {
 
   const fetchNotes = useCallback(
     async (page: number = currentPage) => {
-      const res: any = await request(`/api/manage?page=${page}`, "GET");
+      const res: any = await request(`/manage?page=${page}`, "GET");
       const { totalPages, notes: list } = res;
 
       setNotes({ list, totalPages });
