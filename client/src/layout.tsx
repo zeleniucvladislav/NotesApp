@@ -1,6 +1,6 @@
 import { Navbar, ScrollOnTop } from "shared";
 
-export const Layout = ({ children }: any) => {
+const Layout = ({ children }: any) => {
   return (
     <>
       <Navbar />
@@ -9,3 +9,5 @@ export const Layout = ({ children }: any) => {
     </>
   );
 };
+
+export default Layout;

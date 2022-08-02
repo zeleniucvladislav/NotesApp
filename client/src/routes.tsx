@@ -1,8 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import { Auth, NotesEdit, Note, Notes, EmailConfirmation } from "pages";
 import { useUserContext } from "context/user/user.context";
-import { Layout } from "layout";
+import Layout from "layout";
 import { NotFound } from "shared";
+import withSuspense from "utils/hoc/withSuspense";
 
 export const UseRoutes = () => {
   const { isAuthentificated } = useUserContext();
@@ -11,10 +12,10 @@ export const UseRoutes = () => {
     return (
       <Layout>
         <Routes>
-          <Route path="/" element={<Notes />} />
-          <Route path="notes/edit" element={<NotesEdit />} />
-          <Route path="notes/:id" element={<Note />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="/" element={withSuspense(Notes)} />
+          <Route path="notes/edit" element={withSuspense(NotesEdit)} />
+          <Route path="notes/:id" element={withSuspense(Note)} />
+          <Route path="*" element={withSuspense(NotFound)} />
         </Routes>
       </Layout>
     );
@@ -22,9 +23,9 @@ export const UseRoutes = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<Auth />} />
-      <Route path="verify/:id" element={<EmailConfirmation />} />
-      <Route path="*" element={<NotFound />} />
+      <Route path="/" element={withSuspense(Auth)} />
+      <Route path="verify/:id" element={withSuspense(EmailConfirmation)} />
+      <Route path="*" element={withSuspense(NotFound)} />
     </Routes>
   );
 };

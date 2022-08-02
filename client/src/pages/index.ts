@@ -1,7 +1,11 @@
-import Auth from "pages/auth/auth";
-import NotesEdit from "pages/editNotes/notesEdit";
-import Notes from "pages/notes/notes";
-import Note from "pages/note/note";
-import EmailConfirmation from "pages/confirmation/emailConfirmation";
+import { lazy } from "react";
+
+const Auth = lazy(() => import("./auth/auth"));
+const NotesEdit = lazy(() => import("./notesEdit/notesEdit"));
+const Notes = lazy(() => import("./notes/notes"));
+const Note = lazy(() => import("./note/note"));
+const EmailConfirmation = lazy(
+  () => import("./confirmation/emailConfirmation")
+);
 
 export { Auth, NotesEdit, Notes, Note, EmailConfirmation };

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import moment from "moment";
 import { FaUser, FaClock } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -57,4 +58,4 @@ const NotesList = ({ notes }: Props) => {
   );
 };
 
-export default NotesList;
+export default memo(NotesList);

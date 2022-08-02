@@ -8,7 +8,7 @@ type Props = {
   text?: string;
 };
 
-export const NotFound = ({
+const NotFound = ({
   text = "Ooops! Looks like this page doesn't exist",
 }: Props) => {
   return (

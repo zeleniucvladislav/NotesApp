@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, memo } from "react";
 import { ImArrowRight2, ImArrowLeft2 } from "react-icons/im";
 
 import styles from "./pagesBar.module.scss";
@@ -46,4 +46,4 @@ const PagesBar = ({
     </div>
   );
 };
-export default PagesBar;
+export default memo(PagesBar);
