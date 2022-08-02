@@ -10,7 +10,7 @@ export const useAxios = () => {
   const token = user.token;
 
   const api = axios.create({
-    baseURL: `${process.env.REACT_APP_API_URL}/api`,
+    baseURL: process.env.REACT_APP_API_URL,
     headers: {
       Authorization: token,
     },
