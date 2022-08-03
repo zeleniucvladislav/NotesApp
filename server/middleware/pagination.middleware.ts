@@ -7,7 +7,7 @@ export const paginationMiddleware = (
 ) => {
   try {
     const page: any = req.query.page || 1;
-    const limit = 15;
+    const limit = 10;
     const skip = (parseInt(page) - 1) * limit;
 
     req.pagination = { limit, skip };

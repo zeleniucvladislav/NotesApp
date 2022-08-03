@@ -1,11 +1,8 @@
 @import "styles/mixins";
 
 .layout {
-  position: fixed;
-  width: 100%;
-  z-index: 3;
+  @include nav-layout;
   background-color: var(--box-color);
-  bottom: 0;
 }
 
 .nav {

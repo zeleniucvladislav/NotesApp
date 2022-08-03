@@ -22,12 +22,18 @@ const ScrollOnTop = () => {
     });
   };
 
+  if (!visible) {
+    return <></>;
+  }
+
   return (
     <div className={styles.layout}>
       <div className={styles.wrapper}>
         <button
           onClick={scrollToTop}
-          style={{ opacity: visible ? "100%" : "0%" }}
+          style={{
+            opacity: visible ? "100%" : "0%",
+          }}
           className={styles.btn}
         >
           <BsArrowBarUp className={styles.btn_icon} />

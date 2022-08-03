@@ -3,9 +3,16 @@ import { RiSendPlaneFill } from "react-icons/ri";
 import styles from "./authForm.module.scss";
 
 type Props = {
-  fields: object[];
+  fields: Array<Field>;
   handleRequest: (data: any) => void;
   buttonText: string;
+};
+
+type Field = {
+  type: string;
+  name: string;
+  validation: any;
+  label: string;
 };
 
 export const AuthForm = ({ fields, handleRequest, buttonText }: Props) => {
@@ -30,12 +37,14 @@ export const AuthForm = ({ fields, handleRequest, buttonText }: Props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form} noValidate>
-      {fields.map((field: any) => {
+      {fields.map((field: Field) => {
         const validation = field.validation;
+        const error = errors[field.name]?.message as any;
 
         if (field.name === "repeatPwd") {
           Object.assign(validation, passMatch);
         }
+
         return (
           <div key={field.name}>
             <label className={styles.field}>
@@ -48,7 +57,7 @@ export const AuthForm = ({ fields, handleRequest, buttonText }: Props) => {
                 {...register(field.name, validation)}
               />
             </label>
-            <p className={styles.field__error}>{errors[field.name]?.message}</p>
+            <p className={styles.field__error}>{error}</p>
           </div>
         );
       })}
